@@ -1,6 +1,11 @@
 package kd.poc.flyway.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -24,9 +29,6 @@ public class User {
 
     @Size(max = 50)
     private String lastName;
-    
-    @Size(max = 250)
-    private String address;
 
     public Long getId() {
         return id;
@@ -58,13 +60,5 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
