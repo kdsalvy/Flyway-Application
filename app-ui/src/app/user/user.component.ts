@@ -19,8 +19,7 @@ export class UserComponent implements OnInit {
     this.columnDefs = [
       {headerName: 'User Name', field: 'username'},
       {headerName: 'First Name', field: 'firstName'},
-      {headerName: 'Last Name', field: 'lastName'},
-      {headerName: 'Address', field: 'address'}
+      {headerName: 'Last Name', field: 'lastName'}
     ];
     this.getUsers(0, 5);
   }
