@@ -24,9 +24,6 @@ public class User {
 
     @Size(max = 50)
     private String lastName;
-    
-    @Size(max = 250)
-    private String address;
 
     public Long getId() {
         return id;
@@ -58,13 +55,5 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
