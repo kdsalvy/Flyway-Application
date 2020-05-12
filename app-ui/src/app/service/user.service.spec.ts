@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 describe('UserService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => console.log("Running User Service Tests"));
 
   it('should assert true', () => {
     expect(true).toEqual(true);
