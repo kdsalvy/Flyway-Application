@@ -1,6 +1,6 @@
-#Flyway Demo Application
+# Flyway Demo Application
 
-## FLyway
+## Flyway
 
 Flyway is an open-source tool, licensed under Apache License 2.0, 
 that helps you implement automated and version-based database migrations. 
