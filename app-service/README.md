@@ -14,5 +14,4 @@ The application is a basic **spring-data-rest** project. It contains only 1 tabl
 is created, filled, modified and updated using script V1__init.sql, V2__testdata.sql, 
 V3__modification.sql & V4__updatetestdata.sql respectively.
 
-The updates are versioned and immutable once applied. Flyway system maintains a table where it keeps
-record of 
+The updates are versioned and immutable once applied.
