@@ -1,8 +1,8 @@
 spring:
   profiles:
-    active: dev
-    hibernate:
-      ddl-auto: validate
+    active: @activatedProperties@
+  hibernate:
+    ddl-auto: validate
       
 server:
   servlet:

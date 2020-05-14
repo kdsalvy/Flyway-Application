@@ -48,12 +48,12 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			<properties>
-				<env>dev</env>
-			</properties>
 			<dependencies>
 				<dependency>
 					<groupId>com.h2database</groupId>
@@ -65,7 +65,7 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<env>dev</env>
+				<activatedProperties>test</activatedProperties>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -78,7 +78,7 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<env>dev</env>
+				<activatedProperties>prod</activatedProperties>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -95,6 +95,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- display active profile in compile phase -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-help-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>show-profiles</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>active-profiles</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
