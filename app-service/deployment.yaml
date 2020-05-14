@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flyway-app-deployment
+  labels:
+    app: flyway-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flyway
+  template:
+    metadata:
+      labels:
+        app: flyway
+    spec:
+      containers:
+      - name: app-service
+        image: skedia/app-service:dev
+        env:
+        - name: env
+          value: dev
+        ports:
+        - containerPort: 8080
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flyway-app-service
+  labels:
+    app: flyway
+spec:
+  type: ClusterIP
+  selector:
+    app: flyway
+    type: backend
+  ports:
+    - port: 8080 # service port
+      targetPort: 8081 # application port
+  clusterIP: 10.96.0.2 # cluster ip can be used by applications internally to communicate between them
