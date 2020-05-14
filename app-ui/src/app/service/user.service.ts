@@ -2,16 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  private ipPort: string;
+
+  constructor(private http: HttpClient) {
+    this.ipPort = environment.ipPort;
+  }
 
   public getAllUsers(pageNo: number, limit: number) {
-    return this.http.get("http://localhost:8080/flyway/users?page=" + pageNo + "&size="  + limit).map(
+    return this.http.get(this.ipPort + "/flyway/users?page=" + pageNo + "&size="  + limit).map(
       (response: Response[]) => response
     );
   }
