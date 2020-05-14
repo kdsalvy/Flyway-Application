@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: flyway
+        type: backend
     spec:
       containers:
       - name: app-service
@@ -28,15 +29,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: flyway-app-service
+  name: flyway-app-nodeport-service
   labels:
     app: flyway
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: flyway
     type: backend
   ports:
-    - port: 8080 # service port
-      targetPort: 8081 # application port
+    - port: 8081 # service port which diverts traffic to your application
+      targetPort: 8080 # port of application running in container
+      nodePort: 30080 # port on which the application can be accessed
   clusterIP: 10.96.0.2 # cluster ip can be used by applications internally to communicate between them
