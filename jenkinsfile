@@ -1,0 +1,83 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Checkout Application Code') {
+          steps {
+              checkout([$class: 'GitSCM', branches: [[name: "*/$BRANCH"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/kdsalvy/Flyway-Application.git']]])
+          }
+      }
+      stage('Validate Scripts on local DB') {
+        steps {
+            script {
+                if("${params.DB}" == "true") {
+                    echo "Validating and Applying scripts ${params.DB}"
+                    flywayrunner commandLineArgs: '', credentialsId: 'mysql-jenkinsdb', flywayCommand: 'migrate', installationName: 'Flyway Runner', locations: "filesystem:${WORKSPACE}\\app-service\\src\\main\\resources\\db\\migration", url: 'jdbc:mysql://localhost:3306/jenkinsdb?useSSL=false'
+                } else {
+                    echo 'DB option is not checked, skipping stage'
+                }
+            }
+        }
+      }
+      stage('Build & Run Unit Tests') {
+        steps {
+            script {
+                if("${params.Backend}" == "true") {
+                    echo "Building Application Backend"
+                    bat "cd ${WORKSPACE}\\app-service && mvn clean compile package -P${params.env}"
+                } else {
+                    echo 'Backend option is not checked, skipping stage'
+                }
+            }
+        }
+      }
+      stage('Build and Push Backend Docker Image') {
+        steps {
+            script {
+                if("${params.Backend}" == "true") {
+                    echo "Building Docker Backend Image"
+                    bat "cd ${WORKSPACE}\\app-service && docker build . -t skedia/app-service:${BUILD_NUMBER}_${params.env}"
+                    // provide credentials to push
+                    //bat "docker push skedia/app-service:${BUILD_NUMBER}_${params.env}"
+                } else {
+                    echo 'Backend option is not checked, skipping stage'
+                }
+            }
+        }
+      }
+      stage('Deploy Backend') {
+        steps {
+            script {
+                if("${params.Backend}" == "true") {
+                    echo 'Calling Deploy tool'
+                } else {
+                    echo 'Backend option is not checked, skipping stage'
+                }
+            }
+        }
+      }
+      stage('Build and Push Frontend Docker Image') {
+        steps {
+            script {
+                if("${params.Frontend}" == "true") {
+                    echo 'Building Frontend docker image'
+                    bat "cd ${WORKSPACE}\\app-ui && docker build . -t skedia/app-ui:${BUILD_NUMBER}_${params.env}"
+                } else {
+                    echo 'Frontend option is not checked, skipping stage'
+                }
+            }
+        }
+      }
+      stage('Deploy Frontend') {
+        steps {
+            script {
+                if("${params.Frontend}" == "true") {
+                    echo 'Calling Deploy tool'
+                } else {
+                    echo 'Frontend option is not checked, skipping stage'
+                }
+            }
+        }
+      }
+   }
+}
