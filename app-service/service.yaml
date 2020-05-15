@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flyway-app-nodeport-service
+  name: flyway-app-backend-service
   labels:
     app: flyway
 spec:
