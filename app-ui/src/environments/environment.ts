@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  ipPort: "http://10.96.0.2:8081"
+  name: `default`,
+  ipPort: "http://localhost:30080"
 };
 
 

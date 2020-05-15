@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flyway-app-backend
+  name: flyway-app-frontend
   labels:
     app: flyway-app
 spec:
@@ -13,13 +13,10 @@ spec:
     metadata:
       labels:
         app: flyway
-        type: backend
+        type: frontend
     spec:
       containers:
-      - name: app-service
-        image: skedia/app-service:dev
-        env:
-        - name: env
-          value: dev
+      - name: app-ui
+        image: skedia/app-ui:1.0.1
         ports:
-        - containerPort: 8080
+        - containerPort: 80
