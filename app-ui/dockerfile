@@ -1,16 +1,3 @@
-#Multistage docker file
-
-#Stage 1 - install dependencies and build angular app
-FROM node:alpine AS builder
-
-WORKDIR /app
-
-COPY . .
-
-RUN npm install && \
-    npm run build
-
-#Stage 2 - Pull the build and dependencies from stage 1 to nginx html folder
 FROM nginx:alpine
 
-COPY --from=builder /app/dist/* /usr/share/nginx/html/
+COPY ./dist/app-ui/* /usr/share/nginx/html/flyway/
